@@ -1,0 +1,11 @@
+.SUFFIX:
+.PHONEY: all clean
+
+all:
+	@if ! [ -d obj ]; then \
+	    mkdir obj; \
+	fi
+	gnatmake -P $(TARGET).gpr
+
+clean:
+	-rm obj/*
