@@ -1,0 +1,35 @@
+# Translation file for intl example app
+# Copyright (C) 2014 Zhu Qun-Ying
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: intl\n"
+"Report-Msgid-Bugs-To: zhu.qunying@gmail.com\n"
+"POT-Creation-Date: 2014-04-10\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: intl_cb.adb
+msgid "button clicked"
+msgstr ""
+
+#: intl_cb.adb
+msgid "button_quit is called"
+msgstr ""
+
+#: intl_cb.adb
+msgid "Delete event encounter."
+msgstr ""
+
+#: intl.adb
+msgid "Hello World"
+msgstr ""
+
+#: intl.adb
+msgid "Window"
+msgstr ""
+

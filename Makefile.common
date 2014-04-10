@@ -5,7 +5,7 @@ all:
 	@if ! [ -d obj ]; then \
 	    mkdir obj; \
 	fi
-	gnatmake -P $(TARGET).gpr
+	gprbuild -P $(TARGET).gpr
 
 clean:
 	-rm obj/*

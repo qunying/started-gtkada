@@ -10,4 +10,8 @@ version](https://developer.gnome.org/gtk3/stable/ch01s05.html),
 but since GtkAda is only at Gtk+ 3.8, most of the code could not be
 done at GtkAda, as it uses lots of new wigets in 3.10+. So only the first
 step of empty window was done. This will be updated once GtkAda support
- the new widgets.
+the new widgets.
+
+Some examples may not in the original Gtk document.  They are developed
+during my time of using GtkAda, when problem is encountered and have
+it solved. If I think it is generic enough to share with the public.
