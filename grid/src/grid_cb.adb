@@ -1,9 +1,5 @@
 with Ada.Text_IO; use Ada.Text_IO;
 
-with Gdk.Event;
-
-with Gtk.Widget; use Gtk.Widget;
-with Gtk.Button; use Gtk.Button;
 with Gtk.Main;
 
 package body grid_cb is

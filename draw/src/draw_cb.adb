@@ -1,11 +1,8 @@
-with Gtk.Widget; use Gtk.Widget;
-with Gtk.Button; use Gtk.Button;
 with Glib;       use Glib;
 
 with Gdk.Types;  use Gdk.Types;
 with Gdk.Window;
 with Gtk.Main;
-with Cairo;
 
 with Interfaces; use Interfaces;
 
