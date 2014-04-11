@@ -64,7 +64,7 @@ sub process_modules() {
 
 &process_modules;
 
-my ($date) = `date +'%Y-%m-%d'`;
+my ($date) = `date +'%Y-%m-%d %H:%M%z'`;
 chomp ($date);
 
 print <<EOF
