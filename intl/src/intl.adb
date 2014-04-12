@@ -22,7 +22,7 @@ begin
 
    -- create a top level window
    Gtk_New (Win);
-   Win.Set_Title (-("Window"));
+   Win.Set_Title (-"Window");
 
    -- When the window emits the "delete-event" signal (which is emitted
    -- by GTK+ in response to an event coming from the window manager,
@@ -37,7 +37,7 @@ begin
    Win.Set_Border_Width (10);
 
    -- create a button with label
-   Gtk_New (Button, -("Hello World"));
+   Gtk_New (Button, -"Hello World");
 
    -- connect the click signal
    Button.On_Clicked (button_clicked'Access);

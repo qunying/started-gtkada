@@ -16,7 +16,7 @@ package body intl_cb is
       return  Boolean
    is
    begin
-      Put_Line (-("Delete event encounter."));
+      Put_Line (-"Delete event encounter.");
       return True;
    end main_del;
 
@@ -27,12 +27,12 @@ package body intl_cb is
 
    procedure button_clicked (Self : access Gtk_Button_Record'Class) is
    begin
-      Put_Line (-("button clicked"));
+      Put_Line (-"button clicked");
    end button_clicked;
 
    procedure button_quit (Self : access Gtk_Widget_Record'Class) is
    begin
-      Put_Line (-("button_quit is called"));
+      Put_Line (-"button_quit is called");
       Destroy (Self);
    end button_quit;
 
