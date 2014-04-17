@@ -1,6 +1,16 @@
 #!/usr/bin/env perl
 
+# 2014-04-16 Zhu Qun-Ying
+#   * modified the script to use extract_brackedted from Text::Balanced
+#     to take care of nested () or unbalance ) inside the quoting string.
+#   * Allow spaces between '-', '(' and '"'.
+#   * Add translation of "" inside a string quote. Calls need to be
+#     in the form of -(" text "" text ") for it to work.
+#   * Add translation for Ada.Characters.Latin1.LF besides ASCII.LF
+#   * Only check directories under ../src, don't lookup other places
+
 use strict;
+use Text::Balanced 'extract_bracketed';
 
 ## If set to 1, all translations are set as empty. Otherwise, the translation
 ## is the same as the message itself
@@ -24,9 +34,33 @@ sub analyze_dir () {
    close (DIR);
 }
 
-&analyze_dir ("..");
+push (@modules, "../src");
+&analyze_dir ("../src");
 
 # Parse each of their source files
+
+sub get_bracketed {
+  my $str = shift;
+  my @ret;
+  my $bracketed;
+  my $ele;
+
+  # loop through all the incoming content
+  for ( ; ; ) {
+      # seek to beginning of bracket
+      return @ret  unless  $str =~ /[^-]*-(?=\s*\(\s*")/gc;
+      # get everything from the start brace to the matching end brace
+      ($bracketed, $str) = extract_bracketed( $str, '(")');
+      # no closing brace found
+      return @ret  unless $bracketed;
+
+      # remove the outter () pair
+      $ele = substr($bracketed, 1, length ($bracketed) - 2);
+      # trim the leading spaces and ", if any
+      $ele =~ s/^\s*"//;
+      push (@ret, $ele);
+  }
+}
 
 sub process_modules() {
   local (*DIR, *FILE);
@@ -46,11 +80,12 @@ sub process_modules() {
            }
 
            # Multi-line strings: we need to concatenate
-           @matches = ($contents =~ /[^"]-\("([^"][^)]*)/gso);
+	   @matches = get_bracketed $contents;
            foreach $str (@matches) {
-              $str =~ s/(ASCII\.)?LF/"\\n\"\n  \""/g;
+              $str =~ s/(ASCII\.|Ada\.Characters\.Latin_1\.)?LF/"\\n\"\n  \""/g;
               $str =~ s/"\s*&\s*"//g;
               $str =~ s/"\s*$//g;
+	      $str =~ s/""/\\"/g;
               ${$strings{$str}}{$file}++; #  .= "$file ";
            } 
            close (FILE); 
