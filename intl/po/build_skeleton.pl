@@ -1,19 +1,23 @@
 #!/usr/bin/env perl
 
+# 2014-09-16 Zhu Qun-Ying
+#   * Use Tie::IxHash to preserve the order of message string enter into
+#     the associate strings
 # 2014-04-16 Zhu Qun-Ying
-#   * modified the script to use extract_brackedted from Text::Balanced
+#   * modified the script to use extract_bracketed from Text::Balanced
 #     to take care of nested () or unbalance ) inside the quoting string.
 #   * Allow spaces between '-', '(' and '"'.
 #   * Add translation of "" inside a string quote. Calls need to be
 #     in the form of -(" text "" text ") for it to work.
 #   * Add translation for Ada.Characters.Latin1.LF besides ASCII.LF
 #   * Only check directories under ../src, don't lookup other places
-#   * Make the script more generic and don't hardcode any project
+#   * Make the script more generic and don't hard code any project
 #     specific information. Use parameters for project id, copyright year
 #     , owner and bug report.
 
 use strict;
 use Text::Balanced 'extract_bracketed';
+use Tie::IxHash;
 
 ## If set to 1, all translations are set as empty. Otherwise, the translation
 ## is the same as the message itself
@@ -22,11 +26,14 @@ my ($empty_translation) = 1;
 my (%strings);
 my (@modules);
 my ($msg);
-
+my ($t);
 my ($proj_id) = shift;
 my ($copyright_year) = shift;
 my ($author) = shift;
 my ($bug_report) = shift;
+
+# tie the strings as lxhash to preserve order
+$t = tie (%strings, 'Tie::IxHash');
 
 # Find the list of modules
 sub analyze_dir () {
@@ -62,7 +69,7 @@ sub get_bracketed {
       # no closing brace found
       return @ret  unless $bracketed;
 
-      # remove the outter () pair
+      # remove the outer () pair
       $ele = substr($bracketed, 1, length ($bracketed) - 2);
       # trim the leading spaces and ", if any
       $ele =~ s/^\s*"//;
@@ -129,7 +136,7 @@ msgstr ""
 EOF
   ;
 
-foreach $msg (sort {uc($a) cmp uc($b)} keys %strings) {
+foreach $msg (keys %strings) {
    print "#: ", join (" ", keys %{$strings{$msg}}), "\n";
    print "msgid \"$msg\"\n";
    if ($empty_translation) {
